@@ -1,11 +1,12 @@
 {
   "name": "mathjax-node-page",
   "version": "1.0.0",
-  "description": "converter for documents with mathematics using mathjax-node",
-  "main": "index.js",
+  "description": "Converter for HTML fragments with mathematics using mathjax-node",
+  "main": "./lib/main.js",
   "scripts": {
     "test": "tape test/*.js"
   },
+  "bin" : { "mjpage" : "./bin/mjpage.js" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mathjax/mathjax-node-page.git"

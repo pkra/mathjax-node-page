@@ -15,14 +15,14 @@
  *  limitations under the License.
  */
 
-var mjpage = require('../main.js').mjpage;
+var mjpage = require('../lib/main.js').mjpage;
 var fs = require('fs');
 var jsdom = require('jsdom').jsdom;
 
 var argv = require("yargs")
   .strict()
-  .usage("Usage: page2html [options] < input.html > output.html",{
-    preview: {
+  .usage("Usage: mjpage.js [options] < input.html > output.html",{
+    preview: { // TODO
       boolean: true,
       describe: "make HTML into a MathJax preview"
     },
@@ -50,6 +50,10 @@ var argv = require("yargs")
       default: "AsciiMath,TeX,MathML",
       describe: "input format(s) to look for"
     },
+    output: {
+      default: "SVG",
+      describe: "output format (SVG, CommonHTML, or MML)"
+    },
     eqno: {
       default: "none",
       describe: "equation number style (none, AMS, or all)"
@@ -60,7 +64,7 @@ var argv = require("yargs")
     },
     width: {
       default: 100,
-      describe: "width of container in ex"
+      describe: "width of equation container in ex (for line-breaking)"
     },
     extensions: {
       default: "",
@@ -76,13 +80,17 @@ var argv = require("yargs")
 argv.format = argv.format.split(/ *, */);
 var mjglobal =  {extensions: argv.extensions, fontURL: argv.fontURL};
 var mjlocal = {
-  svg: true,
+  format: argv.format,
+  svg: (argv.output === 'SVG'),
+  html: (argv.output === 'CommonHTML'),
+  mml: (argv.output === 'MML'),
   equationNumbers: argv.eqno,
   singleDollars: !argv.nodollars,
   speakText: argv.speech,
   speakRuleset: argv.speechrules.replace(/^chromevox$/i,"default"),
   speakStyle: argv.speechstyle,
-  ex: argv.ex, width: argv.width,
+  ex: argv.ex,
+  width: argv.width,
   linebreaks: argv.linebreaks
 }
 
