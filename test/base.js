@@ -2,7 +2,7 @@ const tape = require('tape');
 const fs = require('fs');
 const mjpage = require('../lib/main.js').mjpage;
 
-const input = fs.readFileSync(__dirname + '/test.html');
+const input = '\\[\\LaTeX\\]';
 
 tape('Base check', function(t) {
     t.plan(1);
