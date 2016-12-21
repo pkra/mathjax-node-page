@@ -43,6 +43,14 @@ const argv = require("yargs")
             default: "TeX",
             describe: "web font to use in SVG output"
         },
+        semantics: {
+            boolean: true,
+            describe: "for TeX or Asciimath source and MathML output, add input in <semantics> tag"
+        },
+        notexhints: {
+            boolean: true,
+            describe: "for TeX input and MathML output, don't add TeX-specific classes"
+        },
         output: {
             default: "SVG",
             describe: "output format (SVG, CommonHTML, or MML)"
@@ -79,6 +87,10 @@ const mjglobal = {
     MathJax: {
         SVG: {
             font: argv.font
+        },
+        menuSettings: {
+            semantics: argv.semantics,
+            texHints: !argv.notexhints
         }
     }
 };
