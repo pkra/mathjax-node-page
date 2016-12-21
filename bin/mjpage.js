@@ -16,24 +16,16 @@
  *  limitations under the License.
  */
 
-var mjpage = require('../lib/main.js').mjpage;
-var fs = require('fs');
-var jsdom = require('jsdom').jsdom;
+const mjpage = require('../lib/main.js').mjpage;
+const fs = require('fs');
+const jsdom = require('jsdom').jsdom;
 
-var argv = require("yargs")
+const argv = require("yargs")
     .strict()
     .usage("Usage: mjpage.js [options] < input.html > output.html", {
         speech: {
             boolean: true,
             describe: "include speech text"
-        },
-        speechrules: {
-            default: "mathspeak",
-            describe: "ruleset to use for speech text (chromevox or mathspeak)"
-        },
-        speechstyle: {
-            default: "default",
-            describe: "style to use for speech text (default, brief, sbrief)"
         },
         linebreaks: {
             boolean: true,
@@ -46,6 +38,10 @@ var argv = require("yargs")
         format: {
             default: "AsciiMath,TeX,MathML",
             describe: "input format(s) to look for"
+        },
+        font: {
+            default: "TeX",
+            describe: "web font to use in SVG output"
         },
         output: {
             default: "SVG",
@@ -74,13 +70,19 @@ var argv = require("yargs")
     })
     .argv;
 
+if (argv.font === "STIX") argv.font = "STIX-Web";
 argv.format = argv.format.split(/ *, */);
-var mjglobal = {
+const mjglobal = {
     extensions: argv.extensions,
     fontURL: argv.fontURL,
-    singleDollars: argv.dollars
+    singleDollars: argv.dollars,
+    MathJax: {
+        SVG: {
+            font: argv.font
+        }
+    }
 };
-var mjlocal = {
+const mjlocal = {
     format: argv.format,
     svg: (argv.output === 'SVG'),
     html: (argv.output === 'CommonHTML'),
@@ -98,9 +100,9 @@ var mjlocal = {
 //  Read the input file and collect the file contents
 //  When done, process the HTML.
 //
-var html = [];
+const html = [];
 process.stdin.on("readable", function(block) {
-    var chunk = process.stdin.read();
+    const chunk = process.stdin.read();
     if (chunk) html.push(chunk.toString('utf8'));
 });
 process.stdin.on("end", function() {
