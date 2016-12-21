@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+
 /************************************************************************
  *  Copyright (c) 2016 The MathJax Consortium
  *
@@ -20,78 +21,77 @@ var fs = require('fs');
 var jsdom = require('jsdom').jsdom;
 
 var argv = require("yargs")
-  .strict()
-  .usage("Usage: mjpage.js [options] < input.html > output.html",{
-    preview: { // TODO
-      boolean: true,
-      describe: "make HTML into a MathJax preview"
-    },
-    speech: {
-      boolean: true,
-      describe: "include speech text"
-    },
-    speechrules: {
-      default: "mathspeak",
-      describe: "ruleset to use for speech text (chromevox or mathspeak)"
-    },
-    speechstyle: {
-      default: "default",
-      describe: "style to use for speech text (default, brief, sbrief)"
-    },
-    linebreaks: {
-      boolean: true,
-      describe: "perform automatic line-breaking"
-    },
-    nodollars: {
-      boolean: true,
-      describe: "don't use single-dollar delimiters"
-    },
-    format: {
-      default: "AsciiMath,TeX,MathML",
-      describe: "input format(s) to look for"
-    },
-    output: {
-      default: "SVG",
-      describe: "output format (SVG, CommonHTML, or MML)"
-    },
-    eqno: {
-      default: "none",
-      describe: "equation number style (none, AMS, or all)"
-    },
-    ex: {
-      default: 6,
-      describe: "ex-size in pixels"
-    },
-    width: {
-      default: 100,
-      describe: "width of equation container in ex (for line-breaking)"
-    },
-    extensions: {
-      default: "",
-      describe: "extra MathJax extensions e.g. 'Safe,TeX/noUndefined'"
-    },
-    fontURL: {
-      default: "https://cdn.mathjax.org/mathjax/latest/fonts/HTML-CSS",
-      describe: "the URL to use for web fonts"
-    }
-  })
-  .argv;
+    .strict()
+    .usage("Usage: mjpage.js [options] < input.html > output.html", {
+        speech: {
+            boolean: true,
+            describe: "include speech text"
+        },
+        speechrules: {
+            default: "mathspeak",
+            describe: "ruleset to use for speech text (chromevox or mathspeak)"
+        },
+        speechstyle: {
+            default: "default",
+            describe: "style to use for speech text (default, brief, sbrief)"
+        },
+        linebreaks: {
+            boolean: true,
+            describe: "perform automatic line-breaking"
+        },
+        dollars: {
+            boolean: true,
+            describe: "use single-dollar delimiters"
+        },
+        format: {
+            default: "AsciiMath,TeX,MathML",
+            describe: "input format(s) to look for"
+        },
+        output: {
+            default: "SVG",
+            describe: "output format (SVG, CommonHTML, or MML)"
+        },
+        eqno: {
+            default: "none",
+            describe: "equation number style (none, AMS, or all)"
+        },
+        ex: {
+            default: 6,
+            describe: "ex-size in pixels"
+        },
+        width: {
+            default: 100,
+            describe: "width of equation container in ex (for line-breaking)"
+        },
+        extensions: {
+            default: "",
+            describe: "extra MathJax extensions e.g. 'Safe,TeX/noUndefined'"
+        },
+        fontURL: {
+            default: "https://cdn.mathjax.org/mathjax/latest/fonts/HTML-CSS",
+            describe: "the URL to use for web fonts"
+        }
+    })
+    .argv;
 
 argv.format = argv.format.split(/ *, */);
-var mjglobal =  {extensions: argv.extensions, fontURL: argv.fontURL};
+var mjglobal = {
+    extensions: argv.extensions,
+    fontURL: argv.fontURL,
+    singleDollars: argv.dollars
+};
 var mjlocal = {
-  format: argv.format,
-  svg: (argv.output === 'SVG'),
-  html: (argv.output === 'CommonHTML'),
-  mml: (argv.output === 'MML'),
-  equationNumbers: argv.eqno,
-  singleDollars: !argv.nodollars,
-  speakText: argv.speech,
-  speakRuleset: argv.speechrules.replace(/^chromevox$/i,"default"),
-  speakStyle: argv.speechstyle,
-  ex: argv.ex,
-  width: argv.width,
-  linebreaks: argv.linebreaks
+    format: argv.format,
+    svg: (argv.output === 'SVG'),
+    html: (argv.output === 'CommonHTML'),
+    mml: (argv.output === 'MML'),
+    equationNumbers: argv.eqno,
+    speakText: argv.speech,
+    speakRuleset: argv.speechrules.replace(/^chromevox$/i, "default"),
+    speakStyle: argv.speechstyle,
+    ex: argv.ex,
+    width: argv.width,
+    linebreaks: argv.linebreaks
 }
 
 //
@@ -99,12 +99,12 @@ var mjlocal = {
 //  When done, process the HTML.
 //
 var html = [];
-process.stdin.on("readable",function (block) {
-  var chunk = process.stdin.read();
-  if (chunk) html.push(chunk.toString('utf8'));
+process.stdin.on("readable", function(block) {
+    var chunk = process.stdin.read();
+    if (chunk) html.push(chunk.toString('utf8'));
 });
-process.stdin.on("end",function () {
-  mjpage(html.join(""),mjglobal,mjlocal,function(result){
-    process.stdout.write(result);
-  });
+process.stdin.on("end", function() {
+    mjpage(html.join(""), mjglobal, mjlocal, function(result) {
+        process.stdout.write(result);
+    });
 });
