@@ -11,6 +11,6 @@ tape('Support singleDollars', function(t) {
         mml: true
     }, function(output) {
         t.ok(output.indexOf(input) === -1, 'input has been removed')
-        t.ok(output.indexOf('<math'), 'output present')
+        t.ok(output.indexOf('<math') > -1, 'output present')
     });
 });
