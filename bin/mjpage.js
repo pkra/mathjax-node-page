@@ -39,6 +39,10 @@ const argv = require("yargs")
             default: "AsciiMath,TeX,MathML",
             describe: "input format(s) to look for"
         },
+        noGlobalSVG: {
+            boolean: true,
+            describe: "In SVG output use globalCache"
+        },
         font: {
             default: "TeX",
             describe: "web font to use in SVG output"
@@ -97,6 +101,7 @@ const mjglobal = {
 const mjlocal = {
     format: argv.format,
     svg: (argv.output === 'SVG'),
+    useGlobalCache: !argv.noGlobalSVG,
     html: (argv.output === 'CommonHTML'),
     css: (argv.output === 'CommonHTML'),
     mml: (argv.output === 'MML'),
