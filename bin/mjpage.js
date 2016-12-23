@@ -88,6 +88,11 @@ const mjglobal = {
     extensions: argv.extensions,
     fontURL: argv.fontURL,
     singleDollars: argv.dollars,
+    jsdom: {
+        FetchExternalResources: [],
+        ProcessExternalResources: false,
+        virtualConsole: false
+    },
     MathJax: {
         SVG: {
             font: argv.font
