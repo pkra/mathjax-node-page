@@ -2,7 +2,7 @@ const tape = require('tape');
 const mjpage = require('../lib/main.js').mjpage;
 const jsdom = require('jsdom').jsdom;
 
-tape('Math gets wrapping span with correct class', function(t) {
+tape('Support for multiple <math> tags', function(t) {
     t.plan(1);
     const input = '<math><mi>a</mi></math> <math><mi>b</mi></math>';
     const expected = 2;
