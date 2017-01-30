@@ -22,7 +22,7 @@ const jsdom = require('jsdom').jsdom;
 
 const argv = require("yargs")
     .strict()
-    .usage("Usage: mjpage.js [options] < input.html > output.html", {
+    .usage("Usage: mjpage [options] < input.html > output.html", {
         speech: {
             boolean: true,
             describe: "include speech text"
