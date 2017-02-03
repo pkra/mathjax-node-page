@@ -35,6 +35,10 @@ const argv = require("yargs")
             boolean: true,
             describe: "use single-dollar delimiters"
         },
+        fragment: {
+            boolean: true,
+            describe: "return body.innerHTML instead of full document"
+        },
         format: {
             default: "AsciiMath,TeX,MathML",
             describe: "input format(s) to look for"
@@ -88,6 +92,7 @@ const mjglobal = {
     extensions: argv.extensions,
     fontURL: argv.fontURL,
     singleDollars: argv.dollars,
+    fragment: argv.fragment,
     jsdom: {
         FetchExternalResources: [],
         ProcessExternalResources: false,
