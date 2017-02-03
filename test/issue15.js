@@ -7,7 +7,7 @@ tape('Configuration option for jsdom', function(t) {
     t.plan(1);
     const expected = `<html><head><script>console.log(error)</script>
 </head><body></body></html>`
-    let child = exec('echo "<script>console.log("error")</script>" | node ./bin/mjpage.js',
+    let child = exec('echo "<script>console.log("error")</script>" | node ./bin/mjpage',
       function (error, stdout, stderr) {
         t.equal(stdout, expected, 'Virtual Console not activated');
     });
