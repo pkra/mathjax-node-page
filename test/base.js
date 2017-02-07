@@ -7,8 +7,7 @@ const input = '\\[\\LaTeX\\]';
 tape('Base check', function(t) {
     t.plan(1);
     mjpage(input, {
-        format: ["TeX"],
-        singleDollars: true
+        format: ["TeX"]
     }, {
         svg: true
     }, function(output) {

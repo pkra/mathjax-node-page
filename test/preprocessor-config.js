@@ -21,10 +21,10 @@ tape('Support preprocessor configurations', function(t) {
         t.ok(output.indexOf('<math') > -1, 'output present')
     });
     mjpage(input, {
-        format: ["TeX"],
+        format: ["AsciiMath"],
         MathJax: {
-            asciijax: {
-                delimiters: ['%', '%']
+            ascii2jax: {
+                delimiters: [['%', '%']]
             }
         }
     }, {
