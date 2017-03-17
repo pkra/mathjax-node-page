@@ -1,4 +1,4 @@
-# mathjax-node-page
+# mathjax-node-page [![Build Status](https://travis-ci.org/pkra/mathjax-node-page.svg?branch=master)](https://travis-ci.org/pkra/mathjax-node-page)
 
 This Node.js module builds on [mathjax-node](https://github.com/mathjax/mathjax-node) and provides processing of larger content fragments
 
