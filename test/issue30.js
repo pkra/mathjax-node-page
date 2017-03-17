@@ -23,7 +23,6 @@ tape('issue30 - prioritize outputs', function (t) {
         mml: true,
         html: true
     }, function (output) {
-        console.log(output);        
         const document = jsdom(output).defaultView.document;
         const result = document.querySelector('.mjx-chtml');
         t.ok(result, 'HTML output has medium priority');
