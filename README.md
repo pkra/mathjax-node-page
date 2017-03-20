@@ -7,7 +7,7 @@ This Node.js module builds on [mathjax-node](https://github.com/mathjax/mathjax-
 Use
 
 ```
-npm install pkra/mathjax-node-page
+npm install mathjax-node-page
 ```
 
 to install mathjax-node-page and its dependencies.
