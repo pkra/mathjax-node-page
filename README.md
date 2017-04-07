@@ -1,5 +1,7 @@
 # mathjax-node-page [![Build Status](https://travis-ci.org/pkra/mathjax-node-page.svg?branch=master)](https://travis-ci.org/pkra/mathjax-node-page)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/pkra/mathjax-node-page.svg)](https://greenkeeper.io/)
+
 This Node.js module builds on [mathjax-node](https://github.com/mathjax/mathjax-node) and provides processing of larger content fragments
 
 ## installation
