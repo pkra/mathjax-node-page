@@ -17,6 +17,6 @@ tape('Document without math', function(t) {
     }, {
         html: true
     }, function(output) {
-        t.ok(output.indexOf('<style>') === -1, 'style not added')
+        t.ok(output.indexOf('<style') === -1, 'style not added')
     });
 });
