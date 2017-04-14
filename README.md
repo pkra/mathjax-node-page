@@ -38,7 +38,7 @@ The defaults for `pageConfig` are
     displayErrors: true, // determines whether error messages are shown on the console
     undefinedCharError: false, // determines whether unknown characters are saved in the error array
     extensions: '', // a convenience option to add MathJax extensions
-    fontURL: 'https://cdn.mathjax.org/mathjax/latest/fonts/HTML-CSS', // for webfont urls in the CSS for HTML output
+    fontURL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js/fonts/HTML-CSS', // for webfont urls in the CSS for HTML output
     MathJax: {} // options MathJax configuration, see https://docs.mathjax.org
 }
 ```
