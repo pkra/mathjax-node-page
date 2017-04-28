@@ -45,7 +45,7 @@ tape('Custom script types are processed correctly', function(t) {
     }, function(output) {
 			const window = jsdom(output).defaultView;
 			const expected = window.document.querySelector('.mjpage');
-      t.notOk(expected, 'Case and space insensitivity');
+      t.notOk(expected, 'Other scripts are ignored');
     });
 
 });
