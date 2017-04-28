@@ -3,16 +3,16 @@ const mjpage = require('../lib/main.js').mjpage;
 const jsdom = require('jsdom').jsdom;
 
 tape('Custom script types are processed correctly', function(t) {
-    t.plan(3);
+    t.plan(4);
     const inlineInput = '<script type="math/tex"> e^{i\\pi} = -1</script>';
     mjpage(inlineInput, {
         format: ['TeX']
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView
-			const style = window.getComputedStyle(window.document.querySelector('.mjpage'))
-      t.equal(style.textAlign, "left", '"math/tex" is left aligned');
+			const window = jsdom(output).defaultView;
+			const expected = window.document.querySelector('.mjpage');
+      t.ok(expected, '"math/tex" treated as inline');
     });
 
     const displayInput = '<script type="math/tex; mode=display"> e^{i\\pi} = -1</script>';
@@ -21,20 +21,31 @@ tape('Custom script types are processed correctly', function(t) {
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView
-			const style = window.getComputedStyle(window.document.querySelector('.mjpage__block'))
-      t.equal(style.textAlign, "center", '"math/tex; mode=display" is center aligned');
+			const window = jsdom(output).defaultView;
+			const expected = window.document.querySelector('.mjpage__block');
+      t.ok(expected, '"math/tex; mode=display" treated as block');
     });
 
-    const crazyCaseInput = '<script type="math/Tex   ;  modei  = display"> e^{i\\pi} = -1</script>';
+    const asciiInput = '<script type="math/asciimath">alpha</script>';
+    mjpage(displayInput, {
+        format: ['TeX']
+    }, {
+        svg: true
+    }, function(output) {
+			const window = jsdom(output).defaultView;
+			const expected = window.document.querySelector('.mjpage');
+      t.ok(expected, '"math/asciimath" treated as asciimath');
+    });
+
+    const crazyCaseInput = '<script type="math/blarg"> e^{i\\pi} = -1</script>';
     mjpage(crazyCaseInput, {
         format: ['TeX']
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView
-			const style = window.getComputedStyle(window.document.querySelector('.mjpage__block'))
-      t.equal(style.textAlign, "center", 'Case and space insensitivity');
+			const window = jsdom(output).defaultView;
+			const expected = window.document.querySelector('.mjpage');
+      t.notOk(expected, 'Case and space insensitivity');
     });
 
 });
