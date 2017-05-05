@@ -29,6 +29,7 @@ The defaults for `pageConfig` are
 ```javascript
 {
     format: ["MathML", "TeX", "AsciiMath"], // determines type of pre-processors to run
+    output: '', // global override for output option; 'svg', 'html' or 'mml'
     tex: {}, // configuration options for tex pre-processor, cf. lib/tex.js
     ascii: {}, // configuration options for ascii pre-processor, cf. lib/ascii.js
     singleDollars: false, // allow single-dollar delimiter for inline TeX
@@ -59,7 +60,7 @@ and where `mjnodeConfig` represents mathjax-node configuration options, the defa
   mml: false, // generate mml output?
   svg: false, // generate svg output?
   speakText: true, // add spoken annotations to output?
-  timeout: 10 * 1000, // 10 second timeout before restarting MathJax  
+  timeout: 10 * 1000, // 10 second timeout before restarting MathJax
 }
 ```
 
