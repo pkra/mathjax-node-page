@@ -95,7 +95,7 @@ const mjglobal = {
     singleDollars: argv.dollars,
     fragment: argv.fragment,
     jsdom: {
-        FetchExternalResources: [],
+        FetchExternalResources: false,
         ProcessExternalResources: false,
         virtualConsole: false
     },
