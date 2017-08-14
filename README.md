@@ -1,4 +1,4 @@
-# mathjax-node-page [![Build Status](https://travis-ci.org/pkra/mathjax-node-page.svg?branch=master)](https://travis-ci.org/pkra/mathjax-node-page)
+# mathjax-node-page [![Build Status](https://travis-ci.org/roman-spiridonov/mathjax-node-page.svg?branch=master)](https://travis-ci.org/roman-spiridonov/mathjax-node-page)
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/pkra/mathjax-node-page.svg)](https://greenkeeper.io/)
 

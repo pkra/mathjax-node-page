@@ -1,7 +1,7 @@
 const tape = require('tape');
 const mjpage = require('../lib/main.js').mjpage;
 
-tape('Document without math', function(t) {
+tape('Document without math (issue 16)', function(t) {
     t.plan(2);
     const input = '';
     mjpage(input, {
