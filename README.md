@@ -64,6 +64,27 @@ and where `mjnodeConfig` represents mathjax-node configuration options, the defa
 }
 ```
 
+## Advanced usage
+### mathjax-node customization
+mathjax-node-page exports `init` function that allows you to pass in a custom `mathjax-node`  (for example, [mathjax-node-svg2png](https://github.com/pkra/mathjax-node-svg2png)). 
+```javascript
+const mjnode = require('mathjax-node-svg2png');
+mjpage.init(mjnode);
+```
+
+If your custom mathjax-node provides new output options, you can add them by calling `addOutput`. As a second parameter, you can pass custom output handler, which is a function that modifies a DOM element with the conversion result.  The default output handler behavior is to write contents to `wrapper.innerHTML`.
+```javascript
+mjpage.addOutput('png', (wrapper, data) => {
+	wrapper.innerHTML = `<img src="${data}">`;
+});
+// ...now you can use standard mathjax-node-page API
+```
+
+Reset to default mathjax-node behavior by calling `init` with empty parameters. Ensure that all your current mathjax-node-page tasks have been completed before calling it. 
+```javascript
+mjpage.init();  // reset back to default mathjax-node
+```
+
 ## CLI
 
 mathjax-node-page installs a CLI tool. Run `mjpage` to print usage instructions.

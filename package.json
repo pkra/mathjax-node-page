@@ -32,6 +32,8 @@
     "yargs": "*"
   },
   "devDependencies": {
+    "mathjax-node-svg2png": "^1.1.0",
+    "sinon": "^3.2.1",
     "tape": "^4.5.1"
   }
 }
