@@ -25,7 +25,6 @@ tape('User can pass custom mathjax-node', function(t) {
     }, {
         svg: true
     }, function(output) {
-        console.log(input.slice(1,-1));
         t.ok(output.indexOf(input.slice(2,-2))!==-1, 'Output equals input with custom mjNode');
         t.ok(mjnode.config.calledOnce, 'config function called once');
         t.ok(mjnode.typeset.calledTwice, 'typeset function called twice (one dummy call in the end)');

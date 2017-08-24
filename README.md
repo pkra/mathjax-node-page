@@ -85,6 +85,52 @@ Reset to default mathjax-node behavior by calling `init` with empty parameters. 
 mjpage.init();  // reset back to default mathjax-node
 ```
 
+### Events
+`mjpage` inherits `EventEmitter` and provides the following event hooks.
+Add the corresponding event handlers to manipulate the input/output and DOM before/after conversion.
+
+```javascript
+mjpage(input, {
+    format: ["TeX"]
+}, {
+    svg: true
+}, function(output) {
+    // output is your final result
+})
+.on('afterConversion', function(parsedFormula) {
+    // manipulate parsed result and DOM at your will
+    // see description of parsedFormula object below
+});
+```
+
+Formula conversion events: 
+
+* `beforeConversion`: runs before individual formula conversion started, but after initial DOM processing. All the formulas are wrapped in `<script type="...">` tags, where `@type` is one of the following:
+```javascript
+const scripts = document.querySelectorAll(`
+    script[type="math/TeX"],
+    script[type="math/inline-TeX"],
+    script[type="math/AsciiMath"],
+    script[type="math/MathML"],
+    script[type="math/MathML-block"]`
+);
+```
+* `afterConersion`: runs after individual formula conversion completed and DOM was changed. Formula DOM node is a `<span class="mjpage...">` wrapper whose contents are the conversion result. 
+
+All formula conversion events pass `ParsedFormula` instance to the event handler.
+
+```javascript
+{
+    id, // index of formula on the page
+    jobID, // mjpage job ID; formulas belonging to the same page run have the same jobID 
+    node, // DOM node with the formula (contents change before and after conversion)
+    sourceFormula, // the source formula
+    inputFormat, // the source formula format (e.g. "inline-TeX")
+    outputFormula, // the converted formula result from mathjax-node typeset function; use outputFormula[outputFormat] to get the resulting formula string 
+    outputFormat // the resulting formula format (e.g. "svg")
+}
+```
+
 ## CLI
 
 mathjax-node-page installs a CLI tool. Run `mjpage` to print usage instructions.
