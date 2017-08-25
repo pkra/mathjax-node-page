@@ -33,13 +33,14 @@ The defaults for `pageConfig` are
     tex: {}, // configuration options for tex pre-processor, cf. lib/tex.js
     ascii: {}, // configuration options for ascii pre-processor, cf. lib/ascii.js
     singleDollars: false, // allow single-dollar delimiter for inline TeX
-    fragment: false,
+    fragment: false, // return full html document with head and body or html fragment
+    cssInline: true,  // determines whether inline css should be added
     jsdom: {... }, // jsdom-related options
     displayMessages: false, // determines whether Message.Set() calls are logged
     displayErrors: true, // determines whether error messages are shown on the console
     undefinedCharError: false, // determines whether unknown characters are saved in the error array
     extensions: '', // a convenience option to add MathJax extensions
-    fontURL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js/fonts/HTML-CSS', // for webfont urls in the CSS for HTML output
+    fontURL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/fonts/HTML-CSS', // for webfont urls in the CSS for HTML output
     MathJax: {} // options MathJax configuration, see https://docs.mathjax.org
 }
 ```
@@ -86,26 +87,13 @@ mjpage.init();  // reset back to default mathjax-node
 ```
 
 ### Events
-`mjpage` inherits `EventEmitter` and provides the following event hooks.
+`mjpage` runs jobs which inherit `EventEmitter` and provide the following event hooks.
 Add the corresponding event handlers to manipulate the input/output and DOM before/after conversion.
 
-```javascript
-mjpage(input, {
-    format: ["TeX"]
-}, {
-    svg: true
-}, function(output) {
-    // output is your final result
-})
-.on('afterConversion', function(parsedFormula) {
-    // manipulate parsed result and DOM at your will
-    // see description of parsedFormula object below
-});
-```
+All the event handlers are destroyed when job ends to prevent memory leaks.
 
-Formula conversion events: 
-
-* `beforeConversion`: runs before individual formula conversion started, but after initial DOM processing. All the formulas are wrapped in `<script type="...">` tags, where `@type` is one of the following:
+#### Formula conversion events 
+* `beforeConversion` -> `handler(parsedFormula)`: runs before individual formula conversion started, but after initial DOM processing. All the formulas are wrapped in `<script type="...">` tags, where `@type` is one of the following:
 ```javascript
 const scripts = document.querySelectorAll(`
     script[type="math/TeX"],
@@ -115,7 +103,7 @@ const scripts = document.querySelectorAll(`
     script[type="math/MathML-block"]`
 );
 ```
-* `afterConersion`: runs after individual formula conversion completed and DOM was changed. Formula DOM node is a `<span class="mjpage...">` wrapper whose contents are the conversion result. 
+* `afterConersion` -> `handler(parsedFormula)`: runs after individual formula conversion completed and DOM was changed. Formula DOM node is a `<span class="mjpage...">` wrapper whose contents are the conversion result. 
 
 All formula conversion events pass `ParsedFormula` instance to the event handler.
 
@@ -130,6 +118,28 @@ All formula conversion events pass `ParsedFormula` instance to the event handler
     outputFormat // the resulting formula format (e.g. "svg")
 }
 ```
+
+#### Page conversion events
+* `beforeSerialiation` -> `handler(document, css`): runs when converted page DOM was prepared immediately before serialization. Use to manipulate resulting page DOM. The event handler receives `document` node (jsdom) and page `css`. 
+
+`mjpage` function callback receives result after the DOM serialization.  
+
+#### Example
+```javascript
+mjpage(input, {
+    format: ["TeX"]
+}, {
+    svg: true
+}, function(output) {
+    // output is your final result
+})
+.on('afterConversion', function(parsedFormula) {
+    // manipulate parsed result and DOM at your will
+    // see description of parsedFormula object above
+});
+```
+
+
 
 ## CLI
 

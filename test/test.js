@@ -22,7 +22,7 @@ tape('Big acceptance test', function(t) {
         format: ["MathML", "TeX", "AsciiMath"],
         singleDollars: true,
         output: "html"
-    }, {}, function(output) {
+    }, { css: true }, function(output) {
         let expected = fs.readFileSync('./test/data/expected/test-html.html', {encoding: 'utf-8'});
         t.equal(output, expected, 'Result for html output is as expected');
     });
