@@ -33,7 +33,7 @@ The defaults for `pageConfig` are
     tex: {}, // configuration options for tex pre-processor, cf. lib/tex.js
     ascii: {}, // configuration options for ascii pre-processor, cf. lib/ascii.js
     singleDollars: false, // allow single-dollar delimiter for inline TeX
-    fragment: false, // return full html document with head and body or html fragment
+    fragment: false, // return body.innerHTML instead of full document
     cssInline: true,  // determines whether inline css should be added
     jsdom: {... }, // jsdom-related options
     displayMessages: false, // determines whether Message.Set() calls are logged
