@@ -7,6 +7,14 @@ const mjpage = require('../lib/main.js').mjpage;
 
 const input = fs.readFileSync('./test/data/test.html', {encoding: 'utf-8'});
 
+function dos2nix(fileStr) {
+    return fileStr.replace(/\r\n/g, "\n");
+}
+
+function checkFileStrEql(fileStr1, fileStr2) {
+    return ( dos2nix(fileStr1) === dos2nix(fileStr2) );
+}
+
 tape('Big acceptance test', function(t) {
     t.plan(3);
     mjpage(input, {
@@ -15,7 +23,7 @@ tape('Big acceptance test', function(t) {
         output: "svg"
     }, {}, function(output) {
         let expected = fs.readFileSync('./test/data/expected/test-svg.html', {encoding: 'utf-8'});
-        t.equal(output, expected, 'Result for svg output is as expected');
+        t.ok(checkFileStrEql(output, expected), 'Result for svg output is as expected');
     });
 
     mjpage(input, {
@@ -24,7 +32,7 @@ tape('Big acceptance test', function(t) {
         output: "html"
     }, { css: true }, function(output) {
         let expected = fs.readFileSync('./test/data/expected/test-html.html', {encoding: 'utf-8'});
-        t.equal(output, expected, 'Result for html output is as expected');
+        t.ok(checkFileStrEql(output, expected), 'Result for html output is as expected');
     });
 
     mjpage(input, {
@@ -33,6 +41,6 @@ tape('Big acceptance test', function(t) {
         output: "mml"
     }, {}, function(output) {
         let expected = fs.readFileSync('./test/data/expected/test-mml.html', {encoding: 'utf-8'});
-        t.equal(output, expected, 'Result for mml output is as expected');
+        t.ok(checkFileStrEql(output, expected), 'Result for mml output is as expected');
     });
 });
