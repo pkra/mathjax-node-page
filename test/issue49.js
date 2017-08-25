@@ -19,8 +19,8 @@ tape('User can pass mathjax-node-svg2png (issue 49)', function(t) {
     }, {
         png: true
     }, function(output) {
-        t.ok(output.indexOf('<img src="data:image/png;base64,') !== -1);
-        t.ok(output.indexOf('.mjx-svg-href') === -1);
+        t.ok(output.indexOf('<img src="data:image/png;base64,') !== -1, "custom handler for png output works");
+        t.ok(output.indexOf('.mjx-svg-href') === -1, "result has svg css");
         mjpage.init();  // reset for other tests
     });
 });

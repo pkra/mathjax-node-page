@@ -125,7 +125,7 @@ All formula conversion events pass `ParsedFormula` instance to the event handler
     jobID, // mjpage job ID; formulas belonging to the same page run have the same jobID 
     node, // DOM node with the formula (contents change before and after conversion)
     sourceFormula, // the source formula
-    inputFormat, // the source formula format (e.g. "inline-TeX")
+    sourceFormat, // the source formula format (e.g. "inline-TeX")
     outputFormula, // the converted formula result from mathjax-node typeset function; use outputFormula[outputFormat] to get the resulting formula string 
     outputFormat // the resulting formula format (e.g. "svg")
 }
