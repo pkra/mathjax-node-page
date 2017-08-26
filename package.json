@@ -1,5 +1,5 @@
 {
-  "name": "mathjax-node-page",
+  "name": "@romars/mathjax-node-page",
   "version": "1.5.0",
   "description": "Converter for HTML fragments with mathematics using mathjax-node",
   "main": "./lib/main.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pkra/mathjax-node-page.git"
+    "url": "git+https://github.com/roman-spiridonov/mathjax-node-page"
   },
   "keywords": [
     "mathjax",
@@ -19,14 +19,15 @@
     "tex",
     "mathml",
     "png",
-    "html"
+    "html",
+    "formula"
   ],
   "author": "MathJax Consortium",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/pkra/mathjax-node-page/issues"
+    "url": "https://github.com/roman-spiridonov/issues"
   },
-  "homepage": "https://github.com/pkra/mathjax-node-page#readme",
+  "homepage": "https://github.com/roman-spiridonov/mathjax-node-page#readme",
   "dependencies": {
     "mathjax-node": "^1.0.0",
     "yargs": "*"
