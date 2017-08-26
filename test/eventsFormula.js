@@ -7,7 +7,7 @@ const mjpage = require('../lib/main.js').mjpage;
 
 const input = '\\[\\LaTeX_1\\] $$\\LaTeX_2$$';
 
-tape('Check events API for manipulating DOM nodes (issue 7)', function(t) {
+tape('Check events for formula conversions', function(t) {
     t.plan(2+7*4);
     let callCount = 0;
     let jobID;

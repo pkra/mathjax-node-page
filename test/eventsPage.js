@@ -3,7 +3,7 @@ const mjpage = require('../lib/main.js').mjpage;
 
 const input = '\\[\\LaTeX\\]';
 
-tape('Base check', function(t) {
+tape('Check page conversion events', function(t) {
     t.plan(3);
     mjpage(input, {
         format: ["TeX"]
