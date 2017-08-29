@@ -11,7 +11,6 @@ tape('DOM manipulations (issue 7)', function(t) {
     }, {
         svg: true
     }, function(output) {
-        console.log(output);
         t.ok(output.search('<span class="mjpage mjpage__block">changed</span>') !== -1,
           'formula was properly modified through afterConversion hook');
         t.ok(output.search('<span class="test"></span>') !== -1,
