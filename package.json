@@ -1,6 +1,6 @@
 {
   "name": "mathjax-node-page",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Converter for HTML fragments with mathematics using mathjax-node",
   "main": "./lib/main.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/pkra/mathjax-node-page#readme",
   "dependencies": {
     "mathjax-node": "^1.0.0",
-    "yargs": "*"
+    "yargs": "^9"
   },
   "devDependencies": {
     "tape": "^4.5.1"
