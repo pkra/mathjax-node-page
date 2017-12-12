@@ -81,7 +81,7 @@ const argv = require("yargs")
             describe: "extra MathJax extensions e.g. 'Safe,TeX/noUndefined'"
         },
         fontURL: {
-            default: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js/fonts/HTML-CSS",
+            default: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS",
             describe: "the URL to use for web fonts"
         }
     })
@@ -123,19 +123,18 @@ const mjlocal = {
     ex: argv.ex,
     width: argv.width,
     linebreaks: argv.linebreaks
-}
+};
 
 //
 //  Read the input file and collect the file contents
 //  When done, process the HTML.
 //
-const html = [];
-process.stdin.on("readable", function(block) {
-    const chunk = process.stdin.read();
-    if (chunk) html.push(chunk.toString('utf8'));
+let html = "";
+process.stdin.on("data", function(chunk) {
+    html += chunk;
 });
 process.stdin.on("end", function() {
-    mjpage(html.join(""), mjglobal, mjlocal, function(result) {
+    mjpage(html, mjglobal, mjlocal, function(result) {
         process.stdout.write(result);
     });
 });
