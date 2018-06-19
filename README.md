@@ -37,7 +37,7 @@ The defaults for `pageConfig` are
     cssInline: true,  // determines whether inline css should be added
     jsdom: {... }, // jsdom-related options
     displayMessages: false, // determines whether Message.Set() calls are logged
-    displayErrors: true, // determines whether error messages are shown on the console
+    displayErrors: false, // determines whether error messages are shown on the console
     undefinedCharError: false, // determines whether unknown characters are saved in the error array
     extensions: '', // a convenience option to add MathJax extensions
     fontURL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS', // for webfont urls in the CSS for HTML output
@@ -67,7 +67,7 @@ and where `mjnodeConfig` represents mathjax-node configuration options, the defa
 
 ## Advanced usage
 ### mathjax-node customization
-mathjax-node-page exports `init` function that allows you to pass in a custom `mathjax-node`  (for example, [mathjax-node-svg2png](https://github.com/pkra/mathjax-node-svg2png)). 
+mathjax-node-page exports `init` function that allows you to pass in a custom `mathjax-node`  (for example, [mathjax-node-svg2png](https://github.com/pkra/mathjax-node-svg2png)).
 ```javascript
 const mjnode = require('mathjax-node-svg2png');
 mjpage.init(mjnode);
@@ -81,7 +81,7 @@ mjpage.addOutput('png', (wrapper, data) => {
 // ...now you can use standard mathjax-node-page API
 ```
 
-Reset to default mathjax-node behavior by calling `init` with empty parameters. Ensure that all your current mathjax-node-page tasks have been completed before calling it. 
+Reset to default mathjax-node behavior by calling `init` with empty parameters. Ensure that all your current mathjax-node-page tasks have been completed before calling it.
 ```javascript
 mjpage.init();  // reset back to default mathjax-node
 ```
@@ -92,7 +92,7 @@ Add the corresponding event handlers to manipulate the input/output and DOM befo
 
 All the event handlers are destroyed when job ends to prevent memory leaks.
 
-#### Formula conversion events 
+#### Formula conversion events
 * `beforeConversion` -> `handler(parsedFormula)`: runs before individual formula conversion started, but after initial DOM processing. All the formulas are wrapped in `<script type="...">` tags, where `@type` is one of the following:
 ```javascript
 const scripts = document.querySelectorAll(`
@@ -103,26 +103,26 @@ const scripts = document.querySelectorAll(`
     script[type="math/MathML-block"]`
 );
 ```
-* `afterConersion` -> `handler(parsedFormula)`: runs after individual formula conversion completed and DOM was changed. Formula DOM node is a `<span class="mjpage...">` wrapper whose contents are the conversion result. 
+* `afterConersion` -> `handler(parsedFormula)`: runs after individual formula conversion completed and DOM was changed. Formula DOM node is a `<span class="mjpage...">` wrapper whose contents are the conversion result.
 
 All formula conversion events pass `ParsedFormula` instance to the event handler.
 
 ```javascript
 {
     id, // index of formula on the page
-    jobID, // mjpage job ID; formulas belonging to the same page run have the same jobID 
+    jobID, // mjpage job ID; formulas belonging to the same page run have the same jobID
     node, // DOM node with the formula (contents change before and after conversion)
     sourceFormula, // the source formula
     sourceFormat, // the source formula format (e.g. "inline-TeX")
-    outputFormula, // the converted formula result from mathjax-node typeset function; use outputFormula[outputFormat] to get the resulting formula string 
+    outputFormula, // the converted formula result from mathjax-node typeset function; use outputFormula[outputFormat] to get the resulting formula string
     outputFormat // the resulting formula format (e.g. "svg")
 }
 ```
 
 #### Page conversion events
-* `beforeSerialiation` -> `handler(document, css`): runs when converted page DOM was prepared immediately before serialization. Use to manipulate resulting page DOM. The event handler receives `document` node (jsdom) and page `css`. 
+* `beforeSerialiation` -> `handler(document, css`): runs when converted page DOM was prepared immediately before serialization. Use to manipulate resulting page DOM. The event handler receives `document` node (jsdom) and page `css`.
 
-`mjpage` function callback receives result after the DOM serialization.  
+`mjpage` function callback receives result after the DOM serialization.
 
 #### Example
 ```javascript
