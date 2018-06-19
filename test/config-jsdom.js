@@ -6,17 +6,15 @@ tape('Configuration options for jsdom', function (t) {
     t.plan(4);
     const input = `
         <p>Hello World</p>
-        <script src="data:text/javascript;charset=utf-8,window.onload = function(){ var f = document.createElement('footer'); document.body.appendChild(f);}"></script>`;
+        <script> window.onload = function(){ var f = document.createElement('footer'); document.body.appendChild(f);}</script>`;
     mjpage(input, {}, {},
         function (output) {
             t.notOk(output.includes('<footer></footer>'), 'jsdom configuration defaults');
         });
     mjpage(input, {
             jsdom: {
-                FetchExternalResources: ['script'],
-                ProcessExternalResources: ['script'],
+                runScripts: 'dangerously',
                 virtualConsole: true
-
             }
         }, {},
         function (output) {

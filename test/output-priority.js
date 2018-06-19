@@ -1,6 +1,7 @@
 const tape = require('tape');
 const mjpage = require('../lib/main.js').mjpage;
-const jsdom = require('jsdom').jsdom;
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 tape('Prioritize outputs', function (t) {
     t.plan(2);
@@ -12,7 +13,7 @@ tape('Prioritize outputs', function (t) {
         mml: true,
         html: true
     }, function (output) {
-        const document = jsdom(output).defaultView.document;
+        const document = new JSDOM(output).window.document;
         const result = document.querySelector('svg');
         t.ok(result, 'SVG output has high priority');
     });
@@ -22,7 +23,7 @@ tape('Prioritize outputs', function (t) {
         mml: true,
         html: true
     }, function (output) {
-        const document = jsdom(output).defaultView.document;
+        const document = new JSDOM(output).window.document;
         const result = document.querySelector('.mjx-chtml');
         t.ok(result, 'HTML output has medium priority');
     });

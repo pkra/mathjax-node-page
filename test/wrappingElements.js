@@ -1,6 +1,7 @@
 const tape = require('tape');
 const mjpage = require('../lib/main.js').mjpage;
-const jsdom = require('jsdom').jsdom;
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 tape('Math gets wrapping span with correct class', function(t) {
     t.plan(2);
@@ -13,7 +14,7 @@ tape('Math gets wrapping span with correct class', function(t) {
         svg: true,
         useGlobalCache: true
     }, function(output) {
-      const document = jsdom(output).defaultView.document;
+      const document = new JSDOM(output).window.document;
       const result_1 = document.querySelectorAll('.mjpage').length;
       const result_2 = document.querySelectorAll('.mjpage__block').length;
       t.equal(result_1, expected_1, 'Wrapping spans with base class');

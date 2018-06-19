@@ -1,6 +1,7 @@
 const tape = require('tape');
 const mjpage = require('../lib/main.js').mjpage;
-const jsdom = require('jsdom').jsdom;
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 const exec = require('child_process').exec
 
 tape('SVG tags get titles by default in lib', function(t) {
@@ -12,7 +13,7 @@ tape('SVG tags get titles by default in lib', function(t) {
     }, {
         svg: true
     }, function(output) {
-      const document = jsdom(output).defaultView.document;
+      const document = new JSDOM(output).window.document;
       const result = document.querySelectorAll('title').length;
       t.equal(result, expected, 'There is a title tag');
     });

@@ -1,6 +1,7 @@
 const tape = require('tape');
 const mjpage = require('../lib/main.js').mjpage;
-const jsdom = require('jsdom').jsdom;
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 tape('Custom script types are processed correctly', function(t) {
     t.plan(4);
@@ -10,7 +11,7 @@ tape('Custom script types are processed correctly', function(t) {
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView;
+			const window = new JSDOM(output).window;
 			const expected = window.document.querySelector('.mjpage');
       t.ok(expected, '"math/tex" treated as inline');
     });
@@ -21,7 +22,7 @@ tape('Custom script types are processed correctly', function(t) {
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView;
+			const window = new JSDOM(output).window;
 			const expected = window.document.querySelector('.mjpage__block');
       t.ok(expected, '"math/tex; mode=display" treated as block');
     });
@@ -32,7 +33,7 @@ tape('Custom script types are processed correctly', function(t) {
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView;
+			const window = new JSDOM(output).window;
 			const expected = window.document.querySelector('.mjpage');
       t.ok(expected, '"math/asciimath" treated as asciimath');
     });
@@ -43,7 +44,7 @@ tape('Custom script types are processed correctly', function(t) {
     }, {
         svg: true
     }, function(output) {
-			const window = jsdom(output).defaultView;
+			const window = new JSDOM(output).window;
 			const expected = window.document.querySelector('.mjpage');
       t.notOk(expected, 'Other scripts are ignored');
     });
