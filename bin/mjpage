@@ -18,11 +18,11 @@
 
 const mjpage = require('../lib/main.js').mjpage;
 const fs = require('fs');
-const jsdom = require('jsdom').jsdom;
 
 const argv = require("yargs")
     .strict()
-    .usage("Usage: mjpage [options] < input.html > output.html", {
+    .usage("Usage: mjpage [options] < input.html > output.html")
+    .options({
         speech: {
             boolean: true,
             default: true,
@@ -94,11 +94,6 @@ const mjglobal = {
     fontURL: argv.fontURL,
     singleDollars: argv.dollars,
     fragment: argv.fragment,
-    jsdom: {
-        FetchExternalResources: false,
-        ProcessExternalResources: false,
-        virtualConsole: false
-    },
     MathJax: {
         SVG: {
             font: argv.font
