@@ -1,6 +1,6 @@
 {
   "name": "mathjax-node-page",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Converter for HTML fragments with mathematics using mathjax-node",
   "main": "./lib/main.js",
   "scripts": {
