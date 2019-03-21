@@ -22,7 +22,7 @@ mathjax-node-page exports `mjpage` which expects four parameters:
 mjpage(input, mjpageConfig, mjnodeConfig, callback)
 ```
 
-Where `input` is a string with HTML, `pageConfig` specifies page-wide options, and `mjnodeConfig` expects mathjax-node configuration options.
+Where `input` is a string with HTML or `jsdom` object (`JSDOM` class should be acquired via exported `JSDOM`), `pageConfig` specifies page-wide options, and `mjnodeConfig` expects mathjax-node configuration options.
 
 The defaults for `pageConfig` are
 
@@ -35,7 +35,7 @@ The defaults for `pageConfig` are
     singleDollars: false, // allow single-dollar delimiter for inline TeX
     fragment: false, // return body.innerHTML instead of full document
     cssInline: true,  // determines whether inline css should be added
-    jsdom: {... }, // jsdom-related options
+    jsdom: {... }, // jsdom-related options (NOT used when passing jsdom object to mjpage())
     displayMessages: false, // determines whether Message.Set() calls are logged
     displayErrors: false, // determines whether error messages are shown on the console
     undefinedCharError: false, // determines whether unknown characters are saved in the error array
@@ -120,9 +120,10 @@ All formula conversion events pass `ParsedFormula` instance to the event handler
 ```
 
 #### Page conversion events
-* `beforeSerialiation` -> `handler(document, css`): runs when converted page DOM was prepared immediately before serialization. Use to manipulate resulting page DOM. The event handler receives `document` node (jsdom) and page `css`.
+* `beforeSerialiation` -> `handler(document, css`): runs when converted page DOM was prepared immediately before serialization. Use to manipulate resulting page DOM. The event handler receives `document` node (jsdom) and page `css`. Won't trigger if `input` is a `jsdom` object.
 
-`mjpage` function callback receives result after the DOM serialization.
+If `input` is a HTML string, `mjpage` function callback receives result after the DOM serialization.  
+If `input` is a `jsdom` object, `mjpage` function callback receives `jsdom` object itself.
 
 #### Example
 ```javascript
