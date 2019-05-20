@@ -35,13 +35,14 @@ The defaults for `pageConfig` are
     singleDollars: false, // allow single-dollar delimiter for inline TeX
     fragment: false, // return body.innerHTML instead of full document
     cssInline: true,  // determines whether inline css should be added
-    jsdom: {... }, // jsdom-related options (NOT used when passing jsdom object to mjpage())
+    jsdom: {...}, // jsdom-related options
     displayMessages: false, // determines whether Message.Set() calls are logged
     displayErrors: false, // determines whether error messages are shown on the console
     undefinedCharError: false, // determines whether unknown characters are saved in the error array
     extensions: '', // a convenience option to add MathJax extensions
     fontURL: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/fonts/HTML-CSS', // for webfont urls in the CSS for HTML output
-    MathJax: {} // options MathJax configuration, see https://docs.mathjax.org
+    MathJax: {}, // options MathJax configuration, see https://docs.mathjax.org
+    errorHandler: (id, wrapperNode, sourceFormula, sourceFormat, errors) => {...} // function to handle rendering error
 }
 ```
 and where `mjnodeConfig` represents mathjax-node configuration options, the defaults are.
@@ -124,6 +125,17 @@ All formula conversion events pass `ParsedFormula` instance to the event handler
 
 If `input` is a HTML string, `mjpage` function callback receives result after the DOM serialization.  
 If `input` is a `jsdom` object, `mjpage` function callback receives `jsdom` object itself.
+
+#### Error handling
+When a rendering error occurs, `config.errorHandler` will be called. These arguments are passed:
+
+* `id`: index of formula on the page.
+* `wrapperNode`: The jsdom HTMLElement object where the rendered math should be put.
+* `sourceFormula`: The input math code.
+* `sourceFormat`: The format of input math code -- e.g. `inline-TeX` or `TeX`.
+* `errors`: A array of strings of MathJax-Node returned errors.
+
+Modify the `wrapperNode` object to show some error message to user. The default error handling function is printing the error with `console.log`.
 
 #### Example
 ```javascript
